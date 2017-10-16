@@ -74,6 +74,26 @@ namespace Assignment_1
                 AverageUniqueLinks, AverageUsername, AverageUniqueUsername, ChangeRate
             };
         }
+        public override string ToString()
+        {
+            return
+            "Feature #1:\t" + ScreenNameLength + "\n" +
+            "Feature #2:\t" + DescriptionLength + "\n" +
+            "Feature #3:\t" + Days + "\n" +
+            "Feature #4:\t" + Hours + "\n" +
+            "Feature #5:\t" + Minutes + "\n" +
+            "Feature #6:\t" + Seconds + "\n" +
+            "Feature #7:\t" + Following + "\n" +
+            "Feature #8:\t" + Followers + "\n" +
+            "Feature #9:\t" + Ratio + "\n" +
+            "Feature #10:\t" + TotalTweets + "\n" +
+            "Feature #11:\t" + TweetsPerDay + "\n" +
+            "Feature #12:\t" + AverageLinks + "\n" +
+            "Feature #13:\t" + AverageUniqueLinks + "\n" +
+            "Feature #14:\t" + AverageUsername + "\n" +
+            "Feature #15:\t" + AverageUniqueUsername + "\n" +
+            "Feature #16:\t" + ChangeRate ;            
+        }
 
     }
 }

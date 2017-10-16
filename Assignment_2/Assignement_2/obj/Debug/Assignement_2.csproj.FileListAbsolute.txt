@@ -16,3 +16,6 @@ C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Projec
 C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Assignement_2\Assignement_2\obj\Debug\Assignement_2.csprojResolveAssemblyReference.cache
 C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Assignement_2\Assignement_2\bin\Debug\Assignement_2.exe
 C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Assignement_2\Assignement_2\bin\Debug\Assignement_2.pdb
+C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Code\Assignment_2\Assignement_2\bin\Debug\Assignement_2.exe.config
+C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Code\Assignment_2\Assignement_2\obj\Debug\Assignement_2.exe
+C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Code\Assignment_2\Assignement_2\obj\Debug\Assignement_2.pdb

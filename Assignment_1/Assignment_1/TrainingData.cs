@@ -16,6 +16,7 @@ namespace Assignment_1
         public enum Follow { Range0_100, Range101_400, Range401_1400, Range1401_3000, Range3001_10000, RangeGT_10000 }
         public enum Ratio { Range0_1, Range1_3, Range3_8, RangeGT_8 }
         public enum Tweets { Range0_66, Range67_132, RangeGT_132 }
+        public enum TweetsPerDay { Range0_66, Range67_132, RangeGT_132 }
         public enum AverageLinks { Range0_1, Range1_2, RangeGT_2 }
         public enum AverageUsername { Range0_2, Range2_4, RangeGT_4 }
         public enum ChangeRate { Range0_5, Range5_50, RangeGT_50 }
@@ -35,7 +36,7 @@ namespace Assignment_1
 
         public Ratio ratio { get; set; }
         public Tweets TotalTweets { get; set; }
-        public Tweets TweetsPerDay { get; set; }
+        public TweetsPerDay tweetsPerDay { get; set; }
         public AverageLinks averageLinks { get; set; }
 
         public AverageLinks AverageUniqueLinks { get; set; }
@@ -45,7 +46,7 @@ namespace Assignment_1
         public int Label { get; set; }
 
         public TrainingData(ScreenNameLength screenNameLen, DescriptionLength desLength, LongevityDays days, LongevityHours hours, LongevityMinSec minutes, LongevityMinSec seconds,
-            Follow following, Follow followers, Ratio ratio1, Tweets totalTweets, Tweets tweetsPerDay, AverageLinks aveLinks, AverageLinks aveUniqueLinks, AverageUsername aveUsername,
+            Follow following, Follow followers, Ratio ratio1, Tweets totalTweets, TweetsPerDay tweetsPDay, AverageLinks aveLinks, AverageLinks aveUniqueLinks, AverageUsername aveUsername,
             AverageUsername aveUniqueUsername, ChangeRate changeRt, int label)
         {
             screenNameLength = screenNameLen;
@@ -58,7 +59,7 @@ namespace Assignment_1
             Followers = followers;
             ratio = ratio1;
             TotalTweets = totalTweets;
-            TweetsPerDay = tweetsPerDay;
+            tweetsPerDay = tweetsPDay;
             averageLinks = aveLinks;
             AverageUniqueLinks = aveUniqueLinks;
             averageUsername = aveUsername;
@@ -79,7 +80,7 @@ namespace Assignment_1
                 Followers.ToString() + " " +
                 ratio.ToString() + " " +
                 TotalTweets.ToString() + " " +
-                TweetsPerDay.ToString() + " " +
+                tweetsPerDay.ToString() + " " +
                 averageLinks.ToString() + " " +
                 AverageUniqueLinks.ToString() + " " +
                 averageUsername.ToString() + " " +
