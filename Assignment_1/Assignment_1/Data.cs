@@ -28,6 +28,11 @@ namespace Assignment_1
         public DecisionTree Tree4 { get; set; }
         public DecisionTree Tree5 { get; set; }
         public List<Prediction> Predictions { get; set; }
+        public List<Prediction> Predictions2 { get; set; }
+        public List<Prediction> Predictions3 { get; set; }
+        public List<Prediction> Predictions4 { get; set; }
+        public List<Prediction> Predictions5 { get; set; }
+        public List<Prediction> Predictions_Average { get; set; }        
         public List<double> Accuracy { get; set; }
         public int Depth { get; set; }
         public double Error { get; set; }
@@ -57,12 +62,17 @@ namespace Assignment_1
             double temp_error4;
             double temp_error5;
             Cross_Validate_Data = new List<Entry>();
+            Predictions = new List<Prediction>();
+            Predictions2 = new List<Prediction>();
+            Predictions3 = new List<Prediction>();
+            Predictions4 = new List<Prediction>();
+            Predictions5 = new List<Prediction>();
+            Predictions_Average = new List<Prediction>();
             Cross_1 = new List<Entry>();
             Cross_2 = new List<Entry>();
             Cross_3 = new List<Entry>();
             Cross_4 = new List<Entry>();
             Cross_5 = new List<Entry>();
-            Predictions = new List<Prediction>();
             Accuracy = new List<double>();
             SetValidateData(train, test, r);
 
@@ -83,8 +93,18 @@ namespace Assignment_1
             List<TrainingData> testDataHelper = Test_Data;
             temp_error1 = (Convert.ToDouble(Tree.DetermineError(ref testDataHelper)) / Convert.ToDouble(Test_Data.Count)) * 100;
             Tree.Accuracy = 100 - temp_error1;
+
+            data_1 = new List<Entry>();
+            data_2 = new List<Entry>();
+            Training_Data = new List<TrainingData>();
+            SetData(eval);
+            SetTrainingData();
+            Tree.Labels = new List<int>();
+            trainingDataHelper = Training_Data;
+            Tree.DetermineError(ref trainingDataHelper);
+            Predictions = SetPredictions(eval_ID, Tree.Labels);
             #endregion
-            
+
             #region Second Fold
             Training_Data = new List<TrainingData>();
             Test_Data = new List<TrainingData>();
@@ -99,6 +119,16 @@ namespace Assignment_1
             testDataHelper = Test_Data;
             temp_error2 = (Convert.ToDouble(Tree2.DetermineError(ref testDataHelper)) / Convert.ToDouble(Test_Data.Count)) * 100;
             Tree2.Accuracy = 100 - temp_error2;
+
+            data_1 = new List<Entry>();
+            data_2 = new List<Entry>();
+            Training_Data = new List<TrainingData>();
+            SetData(eval);
+            SetTrainingData();
+            Tree2.Labels = new List<int>();
+            trainingDataHelper = Training_Data;
+            Tree2.DetermineError(ref trainingDataHelper);
+            Predictions2 = SetPredictions(eval_ID, Tree2.Labels);
             #endregion
 
             #region Third Fold
@@ -115,6 +145,16 @@ namespace Assignment_1
             testDataHelper = Test_Data;
             temp_error3 = (Convert.ToDouble(Tree3.DetermineError(ref testDataHelper)) / Convert.ToDouble(Test_Data.Count)) * 100;
             Tree3.Accuracy = 100 - temp_error3;
+
+            data_1 = new List<Entry>();
+            data_2 = new List<Entry>();
+            Training_Data = new List<TrainingData>();
+            SetData(eval);
+            SetTrainingData();
+            Tree3.Labels = new List<int>();
+            trainingDataHelper = Training_Data;
+            Tree3.DetermineError(ref trainingDataHelper);
+            Predictions3 = SetPredictions(eval_ID, Tree3.Labels);
             #endregion
 
             #region Fourth Fold
@@ -131,6 +171,16 @@ namespace Assignment_1
             testDataHelper = Test_Data;
             temp_error4 = (Convert.ToDouble(Tree4.DetermineError(ref testDataHelper)) / Convert.ToDouble(Test_Data.Count)) * 100;
             Tree4.Accuracy = 100 - temp_error4;
+
+            data_1 = new List<Entry>();
+            data_2 = new List<Entry>();
+            Training_Data = new List<TrainingData>();
+            SetData(eval);
+            SetTrainingData();
+            Tree4.Labels = new List<int>();
+            trainingDataHelper = Training_Data;
+            Tree4.DetermineError(ref trainingDataHelper);
+            Predictions4 = SetPredictions(eval_ID, Tree4.Labels);
             #endregion
 
             #region Fifth Fold
@@ -156,9 +206,10 @@ namespace Assignment_1
             Tree5.Labels = new List<int>();
             trainingDataHelper = Training_Data;
             Tree5.DetermineError(ref trainingDataHelper);
-            SetAccountIDs(eval_ID, Tree5.Labels);
+            Predictions5 = SetPredictions(eval_ID, Tree5.Labels);
             #endregion
 
+            SetAveragedPredictions();
             StandardDeviation = CalculateStandardDeviation(1-temp_error1, 1-temp_error2, 1-temp_error3, 1-temp_error4, 1-temp_error5);
             //Console.WriteLine(temp_error1);
             //Console.WriteLine(temp_error2);
@@ -331,16 +382,27 @@ namespace Assignment_1
         {
             Tree.TraverseTree();
         }
-        public void SetAccountIDs(StreamReader ids, List<int> labels)
+        public List<Prediction> SetPredictions(StreamReader ids, List<int> labels)
         {
+            List<Prediction> predictions = new List<Prediction>();
             ids.DiscardBufferedData();
             ids.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
             int i = 0;
             string id;
             while ((id = ids.ReadLine()) != null)
             {
-                Predictions.Add(new Prediction(Convert.ToInt32(id), labels[i]));
+                predictions.Add(new Prediction(Convert.ToInt32(id), labels[i]));
                 i++;
+            }
+            return predictions;
+        }
+        public void SetAveragedPredictions()
+        {
+            for (int i = 0; i < Predictions.Count; i++)
+            {
+                List<int> items = new List<int> { Predictions[i].Label, Predictions2[i].Label, Predictions3[i].Label, Predictions4[i].Label, Predictions5[i].Label };
+                int prediction = items.GroupBy(m => m).OrderByDescending(g => g.Count()).Select(g => g.Key).First();
+                Predictions_Average.Add(new Prediction(Predictions[i].Id, prediction));
             }
         }
         public TrainingData.ScreenNameLength ScreenNameLength(double value)

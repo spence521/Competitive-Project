@@ -21,8 +21,18 @@ namespace Assignment_1
 
             #region Delete CSV's
             string startupPath = System.IO.Directory.GetCurrentDirectory();
-            string Decision_Treee = startupPath + @"\Decision_Tree.csv";
-            if (File.Exists(Decision_Treee)) { File.Delete(Decision_Treee); }
+            string Decision_Tree_1 = startupPath + @"\Decision_Tree_1.csv";
+            string Decision_Tree_2 = startupPath + @"\Decision_Tree_2.csv";
+            string Decision_Tree_3 = startupPath + @"\Decision_Tree_3.csv";
+            string Decision_Tree_4 = startupPath + @"\Decision_Tree_4.csv";
+            string Decision_Tree_5 = startupPath + @"\Decision_Tree_5.csv";
+            string Decision_Tree_Average = startupPath + @"\Decision_Tree_Average.csv";
+            if (File.Exists(Decision_Tree_1)) { File.Delete(Decision_Tree_1); }
+            if (File.Exists(Decision_Tree_2)) { File.Delete(Decision_Tree_2); }
+            if (File.Exists(Decision_Tree_3)) { File.Delete(Decision_Tree_3); }
+            if (File.Exists(Decision_Tree_4)) { File.Delete(Decision_Tree_4); }
+            if (File.Exists(Decision_Tree_5)) { File.Delete(Decision_Tree_5); }
+            if (File.Exists(Decision_Tree_Average)) { File.Delete(Decision_Tree_Average); }
             #endregion
 
 
@@ -40,7 +50,12 @@ namespace Assignment_1
                 Eval_ID = File.OpenText(args[3]);
                 if (args.Length > 4) { depth = Convert.ToInt32(args[4]); }
                 data = new Data(Train, Test, Eval, Eval_ID, depth, r);
-                GenerateCSV(data.Predictions, @"\Decision_Tree.csv");
+                GenerateCSV(data.Predictions, @"\Decision_Tree_1.csv");
+                GenerateCSV(data.Predictions2, @"\Decision_Tree_2.csv");
+                GenerateCSV(data.Predictions3, @"\Decision_Tree_3.csv");
+                GenerateCSV(data.Predictions4, @"\Decision_Tree_4.csv");
+                GenerateCSV(data.Predictions5, @"\Decision_Tree_5.csv");
+                GenerateCSV(data.Predictions_Average, @"\Decision_Tree_Average.csv");
                 Console.WriteLine("\t" + Math.Round(100 - data.Error, 3) + "% Accuracy\n"
                     + "Standard Deviation:\t" + Math.Round(data.StandardDeviation, 4));
                 foreach (var item in data.Accuracy)
