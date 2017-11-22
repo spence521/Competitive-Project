@@ -432,7 +432,7 @@ namespace Assignment_1
         public TrainingData.LongevityHours Hours(double value)
         {
             if (value <= 6) { return TrainingData.LongevityHours.Range0_8; }
-            else if (12 < value && value <= 18) { return TrainingData.LongevityHours.Range9_16; }
+            else if (6 < value && value <= 18) { return TrainingData.LongevityHours.Range9_16; }
             else { return TrainingData.LongevityHours.RangeGT_16; }
         }
         public TrainingData.LongevityMinSec MinSec(double value)
