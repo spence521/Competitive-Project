@@ -18,7 +18,12 @@ namespace Assignement_2
         public double Margin { get; set; }
         public WeightBias WeightBias_Average { get; set; }
         public bool Aggressive { get; set; }
-        public Perceptron(List<Entry> train, List<Entry> test, double learning_rate, bool dymanicLearningRate, double margin, WeightBias wb_average, bool aggressive)
+        public double C { get; set; }
+        public bool SVM { get; set; }
+        public double Tradeoff { get; set; }
+        public bool Logistic_Regression { get; set; }
+        public Perceptron(List<Entry> train, List<Entry> test, double learning_rate, bool dymanicLearningRate, double margin, WeightBias wb_average, bool aggressive,
+            double c, bool svm, double tradeoff, bool logistic_regression)
         {
             Training_Data = train;
             Test_Data = test;
@@ -29,7 +34,11 @@ namespace Assignement_2
             Margin = margin;   
             if(wb_average != null) { WeightBias_Average = wb_average; }
             Aggressive = aggressive;
-            Labels = new List<int>();               
+            Labels = new List<int>();
+            C = c;
+            SVM = svm;
+            Tradeoff = tradeoff;
+            Logistic_Regression = logistic_regression;
         }
 
         public WeightBias CalculateWB(WeightBias wb)
@@ -49,45 +58,87 @@ namespace Assignement_2
                     xw = xw + (x[i] * w[i]);
                 }
                 xw += b;
-                if(xw >= Margin) { yguess = +1; }
-                else { yguess = -1; }
-                if(y != yguess)
+                if (Logistic_Regression) //Logistic Regression
                 {
-                    if (Aggressive)
+                    for(int i = 0; i < 16; i++) //(var xi in x)  //foreach (KeyValuePair<int, double> wi in w) //update this 16 here.
                     {
-                        double rhs = y * xw;
-                        double top = Margin - rhs;
-                        double xx = 0;
-                        for (int i = 0; i < 16; i++)
+                        if (x[i] != 0)
                         {
-                            xx = xx +(x[i] * x[i]);
+                            w[i] = ((1 - (2 * Learning_Rate / Tradeoff)) * w[i]) + ((Learning_Rate * y * x[i]) / (Math.Exp(y * xw) + 1));
                         }
-                        xx++;
-                        Learning_Rate = top / xx;
-                        for (int i = 0; i < 16; i++)
+                    }
+                    b = ((1 - (2 * Learning_Rate / Tradeoff)) * b) + ((Learning_Rate * y) / (Math.Exp(y * b) + 1));
+
+                    updates++;
+                }
+                else if (SVM)
+                {
+                    if (y * xw <= 1)
+                    {
+                        for (int i = 0; i < 16; i++) //foreach (KeyValuePair<int, double> wi in w) //update this 16 here.
                         {
-                            w[i] = w[i] + (Learning_Rate * y * x[i]);
+                            if (x[i] != 0)
+                            {
+                                w[i] = ((1 - Learning_Rate) * w[i]) + (Learning_Rate * C * y * x[i]);
+                            }
                         }
-                        b = b + (Learning_Rate * y);
+                        b = ((1 - Learning_Rate) * b) + (Learning_Rate * C * y);
+                        updates++;
                     }
                     else
                     {
+                        for (int i = 0; i < 16; i++) //foreach (var xi in x)
+                        {
+                            if (x[i] != 0)
+                            {
+                                w[i] = ((1 - Learning_Rate) * w[i]);
+                            }
+                        }
+                        b = ((1 - Learning_Rate) * b);
+                    }
+                }
+                else //Perceptron
+                {
+                    if (xw >= Margin) { yguess = +1; }
+                    else { yguess = -1; }
+                    if (y != yguess)
+                    {
+                        if (Aggressive)
+                        {
+                            double rhs = y * xw;
+                            double top = Margin - rhs;
+                            double xx = 0;
+                            for (int i = 0; i < 16; i++)
+                            {
+                                xx = xx + (x[i] * x[i]);
+                            }
+                            xx++;
+                            Learning_Rate = top / xx;
+                            for (int i = 0; i < 16; i++)
+                            {
+                                w[i] = w[i] + (Learning_Rate * y * x[i]);
+                            }
+                            b = b + (Learning_Rate * y);
+                        }
+                        else
+                        {
+                            for (int i = 0; i < 16; i++)
+                            {
+                                w[i] = w[i] + (Learning_Rate * y * x[i]);
+                            }
+                            b = b + (Learning_Rate * y);
+                        }
+                        updates++;
+                    }
+                    if (DymanicLearningRate) { T_Count++; }
+                    if (WeightBias_Average != null)
+                    {
                         for (int i = 0; i < 16; i++)
                         {
-                            w[i] = w[i] + (Learning_Rate * y * x[i]);
+                            WeightBias_Average.Weight[i] += w[i];
                         }
-                        b = b + (Learning_Rate * y);
+                        WeightBias_Average.Bias += b;
                     }
-                    updates++;
-                }
-                if (DymanicLearningRate) { T_Count++; }
-                if (WeightBias_Average != null)
-                {
-                    for (int i = 0; i < 16; i++)
-                    {
-                        WeightBias_Average.Weight[i] += w[i];
-                    }
-                    WeightBias_Average.Bias += b;
                 }
             }
             return new WeightBias(w, b, updates);

@@ -44,17 +44,23 @@ namespace Assignment_1
 
 
             #region Passing in parameters
-            if (args.Length == 0)
-            {
-                System.Console.WriteLine("Please enter a file argument.");
-                return;
-            }
-            else if (args.Length > 3) //at least four arguments
-            {
-                Train = File.OpenText(args[0]);
-                Test = File.OpenText(args[1]);
-                Eval = File.OpenText(args[2]);
-                Eval_ID = File.OpenText(args[3]);
+            //if (args.Length == 0)
+            //{
+            //    System.Console.WriteLine("Please enter a file argument.");
+            //    return;
+            //}
+            //else if (args.Length > 3) //at least four arguments
+            //{
+                Train = File.OpenText(startupPath + @"\data.train");
+                Test = File.OpenText(startupPath + @"\data.test");
+                Eval = File.OpenText(startupPath + @"\data.eval.anon");
+                //Train_ID = File.OpenText(startupPath + @"\data.train.id");
+                //Test_ID = File.OpenText(startupPath + @"\data.test.id");
+                Eval_ID = File.OpenText(startupPath + @"\data.eval.id");
+                //Train = File.OpenText(args[0]);
+                //Test = File.OpenText(args[1]);
+                //Eval = File.OpenText(args[2]);
+                //Eval_ID = File.OpenText(args[3]);
                 if (args.Length > 4) { depth = Convert.ToInt32(args[4]); }
                 data2 = new Data(Train, Test, Eval, Eval_ID, 2, r);
                 data3 = new Data(Train, Test, Eval, Eval_ID, 3, r);
@@ -99,7 +105,7 @@ namespace Assignment_1
 
                 GenerateCSV(FinalPredictions, "Bagged_Forest.csv");
                 Console.WriteLine(DataTree.Depth);
-            }
+            //}
 
             #endregion
 

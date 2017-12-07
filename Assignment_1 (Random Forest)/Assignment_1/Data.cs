@@ -61,7 +61,7 @@ namespace Assignment_1
                 Test_Data = new List<TrainingData>();
                 SetData(r, r2);
                 SetTrainingData();
-                List<TrainingData> trainingDataHelper = Training_Data_Forest.GetRange(0, 14500);
+                List<TrainingData> trainingDataHelper = Training_Data_Forest.GetRange(0, 1500);
                 Tree = new DecisionTree(ref trainingDataHelper, depth, rand);
                 Tree.CollapseTree();
                 List<TrainingData> testDataHelper = Test_Data;

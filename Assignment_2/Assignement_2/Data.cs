@@ -25,8 +25,20 @@ namespace Assignement_2
         public double Margin { get; set; }
         public double Majority { get; set; }
         public WeightBias BestWeightBias { get; set; }
-        public Data(int epochs, double learning_rate, Random r, bool DymanicLearningRate, double margin, bool Average, bool Aggressive, StreamReader train, StreamReader test)
+
+        public double C { get; set; }
+        public bool SVM { get; set; }
+        public double Tradeoff { get; set; }
+        public bool Logistic_Regression { get; set; }
+
+        public Data(int epochs, double learning_rate, Random r, bool DymanicLearningRate, double margin, bool Average, bool Aggressive, 
+            double c, bool svm, double tradeoff, bool logistic_regression, StreamReader train, StreamReader test)
         {
+            C = c;
+            SVM = svm;
+            Tradeoff = tradeoff;
+            Logistic_Regression = logistic_regression;
+
             double[] w_average = new double[16];
             double b_average;
             WeightBias wb_average = null;
@@ -67,7 +79,7 @@ namespace Assignement_2
             //SetData(r2);
             //SetData(r3);
             //SetData(r4);
-            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive);
+            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive, C, SVM, Tradeoff, Logistic_Regression);
             double[] w = new double[16];
             double b = (r.NextDouble() * (0.01 + 0.01) - 0.01);
             for (int i = 0; i < 16; i++)
@@ -96,7 +108,7 @@ namespace Assignement_2
             //SetData(r2);
             //SetData(r3);
             //SetData(r5);
-            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive);
+            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive, C, SVM, Tradeoff, Logistic_Regression);
             wb = new WeightBias(w, b, 0);
             for (int i = 0; i < epochs; i++)
             {
@@ -118,7 +130,7 @@ namespace Assignement_2
             //SetData(r2);
             //SetData(r4);
             //SetData(r5);
-            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive);
+            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive, C, SVM, Tradeoff, Logistic_Regression);
             wb = new WeightBias(w, b, 0);
             for (int i = 0; i < epochs; i++)
             {
@@ -140,7 +152,7 @@ namespace Assignement_2
             //SetData(r3);
             //SetData(r4);
             //SetData(r5);
-            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive);
+            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive, C, SVM, Tradeoff, Logistic_Regression);
             wb = new WeightBias(w, b, 0);
             for (int i = 0; i < epochs; i++)
             {
@@ -162,7 +174,7 @@ namespace Assignement_2
             //SetData(r3);
             //SetData(r4);
             //SetData(r5);
-            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive);
+            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive, C, SVM, Tradeoff, Logistic_Regression);
             wb = new WeightBias(w, b, 0);
             for (int i = 0; i < epochs; i++)
             {
@@ -172,12 +184,17 @@ namespace Assignement_2
             temp_accuracy5 = perceptron.GetAccuracy(Test_Data, wb);
             if (Average) { temp_accuracy5 = perceptron.GetAccuracy(Test_Data, perceptron.WeightBias_Average); }
             #endregion
-
-
+            
             Accuracy = (temp_accuracy1 + temp_accuracy2 + temp_accuracy3 + temp_accuracy4 + temp_accuracy5) / 5;
         }
-        public Data(StreamReader r1, StreamReader r2, int epochs, double learning_rate, Random r, bool DymanicLearningRate, double margin, bool Average, bool Aggressive)
+        public Data(StreamReader r1, StreamReader r2, int epochs, double learning_rate, Random r, bool DymanicLearningRate, double margin, bool Average, bool Aggressive,
+            double c, bool svm, double tradeoff, bool logistic_regression)
         {
+            C = c;
+            SVM = svm;
+            Tradeoff = tradeoff;
+            Logistic_Regression = logistic_regression;
+
             double[] w_average = new double[16];
             double b_average;
             WeightBias wb_average = null;
@@ -191,13 +208,12 @@ namespace Assignement_2
                 b_average = (r.NextDouble() * (0.01 + 0.01) - 0.01);
                 wb_average = new WeightBias(w_average, b_average, 0);
             }
-
-
+            
             Training_Data = new List<Entry>();
             Test_Data = new List<Entry>();
             AccuracyWeightB = new Dictionary<int, AccuracyWB>();
             SetData(r1, r2);
-            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive);
+            perceptron = new Perceptron(Training_Data, Test_Data, learning_rate, DymanicLearningRate, margin, wb_average, Aggressive, C, SVM, Tradeoff, Logistic_Regression);
             double[] w = new double[16];
             double b = (r.NextDouble() * (0.01 + 0.01) - 0.01);
             for (int i = 0; i < 16; i++)
@@ -241,7 +257,7 @@ namespace Assignement_2
             Predictions = new List<Prediction>();
 
             SetData(r1);
-            perceptron = new Perceptron(Training_Data, null, learning_rate, false, 0, null, false);
+            perceptron = new Perceptron(Training_Data, null, learning_rate, false, 0, null, false, 0, false, 0, false);
             Accuracy = perceptron.GetAccuracy(Training_Data, bestWB);
             SetAccountIDs(r2, perceptron.Labels);            
         }
