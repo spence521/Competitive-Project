@@ -20,6 +20,7 @@ namespace Assignement_2
         public List<Prediction> Predictions { get; private set; }
         public Dictionary<int, AccuracyWB> AccuracyWeightB { get; private set; }
         public Perceptron perceptron { get; set; }
+        public double Train_Accuracy { get; set; }
         public double Accuracy { get; set; }
         public double Learning_Rate { get; set; }
         public double Margin { get; set; }
@@ -243,10 +244,13 @@ namespace Assignement_2
             //}
             AccuracyWB bestAccuracy = AccuracyWeightB.OrderByDescending(x => x.Value.Accuracy).ThenByDescending(y => y.Key).Select(z => z.Value).First();
 
-
             Accuracy = bestAccuracy.Accuracy;
             BestWeightBias = bestAccuracy.Weight_Bias;
             Learning_Rate = learning_rate;
+            List<int> temp = perceptron.Labels;
+            perceptron.Labels = new List<int>();
+            Train_Accuracy = perceptron.GetAccuracy(Training_Data, bestAccuracy.Weight_Bias);
+            perceptron.Labels = temp;
             //Console.WriteLine("\n" + Accuracy); 
         }
         public Data(StreamReader r1, StreamReader r2, double learning_rate, WeightBias bestWB)

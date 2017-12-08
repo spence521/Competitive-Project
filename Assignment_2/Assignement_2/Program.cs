@@ -156,6 +156,7 @@ namespace Assignement_2
                 Console.WriteLine("The cross validation accuracy for the best hyperparameter is: \n\t" + Math.Round(LargestData.Accuracy, 3));
                 Data dataTest = new Data(Train, Test, 20, learning_rate, rand2, false, 0, false, false, C, true, 0, false);
                 Console.WriteLine("The total number of updates for the best Weight and Bias: \n\t" + dataTest.BestWeightBias.Updates);
+                Console.WriteLine("Train Set Accuracy: \n\t" + Math.Round(dataTest.Train_Accuracy, 3));
                 Console.WriteLine("Test Set Accuracy: \n\t" + Math.Round(dataTest.Accuracy, 3));
                 Data dataEval = new Data(Eval, Eval_ID, learning_rate, dataTest.BestWeightBias);
                 GenerateCSV(dataEval.Predictions, @"\SVM.csv");
@@ -227,6 +228,7 @@ namespace Assignement_2
                 Console.WriteLine("The cross validation accuracy for the best hyperparameter is: \n\t" + Math.Round(LargestData.Accuracy, 3));
                 dataTest = new Data(Train, Test, 20, learning_rate, rand, false, 0, false, false, 0, false, Tradeoff, true);
                 Console.WriteLine("The total number of updates for the best Weight and Bias: \n\t" + dataTest.BestWeightBias.Updates);
+                Console.WriteLine("Train Set Accuracy: \n\t" + Math.Round(dataTest.Train_Accuracy, 3));
                 Console.WriteLine("Test Set Accuracy: \n\t" + Math.Round(dataTest.Accuracy, 3));
                 dataEval = new Data(Eval, Eval_ID, learning_rate, dataTest.BestWeightBias);
                 GenerateCSV(dataEval.Predictions, @"\Logistic_Regression.csv");
@@ -281,6 +283,7 @@ namespace Assignement_2
                 Console.WriteLine("The cross validation accuracy for the best hyperparameter is: \n\t" + Math.Round(LargestData.Accuracy, 3));
                 dataTest2 = new Data(Train, Test, 20, learning_rate, rand3, true, 0, false, false, 0, false, 0, false);
                 Console.WriteLine("The total number of updates for the best Weight and Bias: \n\t" + dataTest2.BestWeightBias.Updates);
+                Console.WriteLine("Train Set Accuracy: \n\t" + Math.Round(dataTest2.Train_Accuracy, 3));
                 Console.WriteLine("Test Set Accuracy: \n\t" + Math.Round(dataTest2.Accuracy, 3));
                 dataEval2 = new Data(Eval, Eval_ID, learning_rate, dataTest2.BestWeightBias);
                 GenerateCSV(dataEval2.Predictions, @"\Dynamic_Learning_Rate.csv");
@@ -405,6 +408,7 @@ namespace Assignement_2
                 Console.WriteLine("The cross validation accuracy for the best hyperparameter is: \n\t" + Math.Round(LargestData.Accuracy, 3));
                 dataTest5 = new Data(Train, Test, 20, learning_rate, rand4, true, margin, false, true, 0, false, 0, false);
                 Console.WriteLine("The total number of updates for the best Weight and Bias: \n\t" + dataTest5.BestWeightBias.Updates);
+                Console.WriteLine("Train Set Accuracy: \n\t" + Math.Round(dataTest5.Train_Accuracy, 3));
                 Console.WriteLine("Test Set Accuracy: \n\t" + Math.Round(dataTest5.Accuracy, 3));
                 dataEval5 = new Data(Eval, Eval_ID, learning_rate, dataTest5.BestWeightBias);
                 GenerateCSV(dataEval5.Predictions, @"\Aggressive_Perceptron.csv");
