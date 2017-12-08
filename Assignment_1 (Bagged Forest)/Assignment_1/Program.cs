@@ -24,7 +24,7 @@ namespace Assignment_1
             StreamReader Eval;
             StreamReader Eval_ID;
             Random r = new Random(2);
-            int depth = int.MaxValue;
+            
 
             #region Delete CSV's
             string startupPath = System.IO.Directory.GetCurrentDirectory();
@@ -61,7 +61,6 @@ namespace Assignment_1
                 //Test = File.OpenText(args[1]);
                 //Eval = File.OpenText(args[2]);
                 //Eval_ID = File.OpenText(args[3]);
-                if (args.Length > 4) { depth = Convert.ToInt32(args[4]); }
                 data2 = new Data(Train, Test, Eval, Eval_ID, 2, r);
                 data3 = new Data(Train, Test, Eval, Eval_ID, 3, r);
                 data4 = new Data(Train, Test, Eval, Eval_ID, 4, r);
