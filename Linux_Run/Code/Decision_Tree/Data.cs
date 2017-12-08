@@ -34,7 +34,8 @@ namespace Assignment_1
         public List<Prediction> Predictions4 { get; set; }
         public List<Prediction> Predictions5 { get; set; }
         public List<Prediction> Predictions_Average { get; set; } 
-        public double Accuracy { get; set; }       
+        public double Accuracy { get; set; }
+        public double Train_Accuracy { get; set; }
         public List<double> Accuracies { get; set; }
         public int Depth { get; set; }
         public double Error { get; set; }
@@ -42,6 +43,18 @@ namespace Assignment_1
         public List<ReTweets> ReTweet { get; set; }
         //public List<Post> Post { get; set; }
 
+        public Data(DecisionTree Tree, ref List<Entry> train, ref List<Entry> test)
+        {
+            Training_Data = new List<TrainingData>();
+            Test_Data = new List<TrainingData>();
+            data_1 = train;
+            data_2 = test;
+            SetTrainingData();
+            List<TrainingData> train_data = Training_Data;
+            List<TrainingData> test_data = Test_Data;
+            Train_Accuracy = 100 - (Convert.ToDouble(Tree.DetermineError(ref train_data)) / Convert.ToDouble(Training_Data.Count));
+            Accuracy = 100 - (Convert.ToDouble(Tree.DetermineError(ref test_data)) / Convert.ToDouble(Test_Data.Count));
+        }
         public Data(StreamReader train, StreamReader test, StreamReader eval, StreamReader train_ID, StreamReader test_ID, StreamReader eval_ID, StreamReader tweets, Random r)
         {
             data_1 = new List<Entry>();

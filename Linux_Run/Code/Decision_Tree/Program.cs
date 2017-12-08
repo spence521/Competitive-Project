@@ -61,7 +61,7 @@ namespace Assignment_1
                 //Train_ID = File.OpenText(startupPath + @"\data.train.id");
                 //Test_ID = File.OpenText(startupPath + @"\data.test.id");
                 //Eval_ID = File.OpenText(startupPath + @"\data.eval.id");
-                Console.WriteLine(startupPath);
+                //Tweets = File.OpenText(startupPath + @"\tweets.txt");
                 Tweets = File.OpenText(startupPath + @"/Data_Files/tweets.txt");
                 tweetData = new Data(Train, Test, Eval, Train_ID, Test_ID, Eval_ID, Tweets, r);
                 List<ReTweets> re_tweets = tweetData.ReTweet;
@@ -99,15 +99,21 @@ namespace Assignment_1
                 List<PredictionAccuracy> ListPredAcc = new List<PredictionAccuracy>();
                 foreach (var item in ListofDatas)
                 {
-                    ListPredAcc.Add(new PredictionAccuracy(item.Predictions, item.Accuracies[0]));
-                    ListPredAcc.Add(new PredictionAccuracy(item.Predictions2, item.Accuracies[1]));
-                    ListPredAcc.Add(new PredictionAccuracy(item.Predictions3, item.Accuracies[2]));
-                    ListPredAcc.Add(new PredictionAccuracy(item.Predictions4, item.Accuracies[3]));
-                    ListPredAcc.Add(new PredictionAccuracy(item.Predictions5, item.Accuracies[4]));
+                    ListPredAcc.Add(new PredictionAccuracy(item.Predictions, item.Accuracies[0], item.Tree));
+                    ListPredAcc.Add(new PredictionAccuracy(item.Predictions2, item.Accuracies[1], item.Tree2));
+                    ListPredAcc.Add(new PredictionAccuracy(item.Predictions3, item.Accuracies[2], item.Tree3));
+                    ListPredAcc.Add(new PredictionAccuracy(item.Predictions4, item.Accuracies[3], item.Tree4));
+                    ListPredAcc.Add(new PredictionAccuracy(item.Predictions5, item.Accuracies[4], item.Tree5));
                 }
                 GenerateCSV(DataTree.Predictions, @"\Decision_Tree.csv");
                 PredictionAccuracy bestPrediction = ListPredAcc.OrderByDescending(x => x.Accuracy).FirstOrDefault();
-                Console.WriteLine("The accuracy for the best tree generated from the cross validations (from about 45 trees) is:\t" + bestPrediction.Accuracy);
+                Console.WriteLine("The accuracy for the best tree generated from the cross validations (from about 45 trees)(BEST ACCURACY) is:\t" + bestPrediction.Accuracy);
+                Data FinalData = new Data(bestPrediction.Tree, ref Train_Data, ref Test_Data);
+                double Train_Accuracy = FinalData.Train_Accuracy;
+                double Test_Accuracy = FinalData.Accuracy;
+                Console.WriteLine("The Training Accuracy for the best tree from cross validation is (from about 45 trees)(BEST ACCURACY):\n\t" + Train_Accuracy);
+                Console.WriteLine("The Test Accuracy for the best tree from cross validation is (from about 45 trees)(BEST ACCURACY):\n\t" + Test_Accuracy);
+
 
                 GenerateCSV(bestPrediction.Predictions, @"\Best_Predictions.csv");
 

@@ -10,10 +10,12 @@ namespace Assignment_1
     {
         public List<Prediction> Predictions { get; set; }
         public double Accuracy { get; set; }
-        public PredictionAccuracy(List<Prediction> predictions, double accuracy)
+        public DecisionTree Tree { get; set; }
+        public PredictionAccuracy(List<Prediction> predictions, double accuracy, DecisionTree tree)
         {
             Predictions = predictions;
             Accuracy = accuracy;
+            Tree = tree;
         }
     }
 }
