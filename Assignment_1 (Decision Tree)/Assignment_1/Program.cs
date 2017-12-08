@@ -62,7 +62,7 @@ namespace Assignment_1
                 //Test_ID = File.OpenText(startupPath + @"\data.test.id");
                 //Eval_ID = File.OpenText(startupPath + @"\data.eval.id");
                 Console.WriteLine(startupPath);
-                Tweets = File.OpenText(startupPath + @"\tweets.txt");
+                Tweets = File.OpenText(startupPath + @"\Data_Files\tweets.txt");
                 tweetData = new Data(Train, Test, Eval, Train_ID, Test_ID, Eval_ID, Tweets, r);
                 List<ReTweets> re_tweets = tweetData.ReTweet;
                 List<Post> post = null; // tweetData.Post;
