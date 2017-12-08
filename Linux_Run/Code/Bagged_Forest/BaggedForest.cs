@@ -9,11 +9,17 @@ namespace Assignment_1
     public class BaggedForest
     {
         public double Accuracy { get; set; }
-        public List<Prediction> Predictions { get; set; }
-        public BaggedForest(double accuracy, List<Prediction> predictions)
+        public List<Prediction> Train_Predictions { get; set; }
+        public List<Prediction> Test_Predictions { get; set; }
+
+        public List<Prediction> Eval_Predictions { get; set; }
+
+        public BaggedForest(double accuracy, List<Prediction> train_predictions, List<Prediction> test_predictions, List<Prediction> eval_predictions)
         {
             Accuracy = accuracy;
-            Predictions = predictions;
-        }   
+            Train_Predictions = train_predictions;
+            Test_Predictions = test_predictions;
+            Eval_Predictions = eval_predictions;
+        }
     }
 }

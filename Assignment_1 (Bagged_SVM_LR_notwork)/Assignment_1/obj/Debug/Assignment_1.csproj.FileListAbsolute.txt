@@ -37,3 +37,6 @@ C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Projec
 C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Code\Assignment_1 (Random Forest)\Assignment_1\bin\Debug\Assignment_1.exe
 C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Code\Assignment_1 (Random Forest)\Assignment_1\bin\Debug\Assignment_1.pdb
 C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Code\Assignment_1 (Random Forest)\Assignment_1\obj\Debug\Assignment_1.csprojResolveAssemblyReference.cache
+C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Code\Assignment_1 (Bagged_SVM_LR_notwork)\Assignment_1\bin\Debug\Assignment_1.exe.config
+C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Code\Assignment_1 (Bagged_SVM_LR_notwork)\Assignment_1\obj\Debug\Assignment_1.exe
+C:\Users\Spencer\Documents\College\CS 6350 - Machine Learning\Competitive Project\Code\Assignment_1 (Bagged_SVM_LR_notwork)\Assignment_1\obj\Debug\Assignment_1.pdb

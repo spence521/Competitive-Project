@@ -27,6 +27,8 @@ namespace Assignment_1
         public DecisionTree Tree3 { get; set; }
         public DecisionTree Tree4 { get; set; }
         public DecisionTree Tree5 { get; set; }
+        public List<Prediction> Train_Predictions { get; set; }
+        public List<Prediction> Test_Predictions { get; set; }
         public List<Prediction> Predictions { get; set; }
         public List<Prediction> Predictions2 { get; set; }
         public List<Prediction> Predictions3 { get; set; }
@@ -41,7 +43,7 @@ namespace Assignment_1
         public List<BaggedForest> Forest { get; set; }
         public List<TrainingData> Training_Data_Forest { get; set; }
 
-        public Data(StreamReader r, StreamReader r2, StreamReader eval, StreamReader eval_ID, int depth, Random rand, int ForestSize)
+        public Data(StreamReader r, StreamReader r2, StreamReader eval, StreamReader train_ID, StreamReader test_ID, StreamReader eval_ID, int depth, Random rand, int ForestSize)
         {
             Forest = new List<BaggedForest>();
             Training_Data_Forest = new List<TrainingData>();
@@ -64,10 +66,15 @@ namespace Assignment_1
                 List<TrainingData> trainingDataHelper = Training_Data_Forest.GetRange(0, 1500);
                 Tree = new DecisionTree(ref trainingDataHelper, depth, rand);
                 Tree.CollapseTree();
+                List<TrainingData> trainDataHelper = Training_Data;
                 List<TrainingData> testDataHelper = Test_Data;
                 Error = (Convert.ToDouble(Tree.DetermineError(ref testDataHelper)) / Convert.ToDouble(Test_Data.Count)) * 100;
                 Accuracy = 100 - Error;
                 Depth = Tree.DetermineDepth(0);
+                Test_Predictions = SetPredictions(test_ID, Tree.Labels);
+                Tree.Labels = new List<int>();
+                Tree.DetermineError(ref trainDataHelper);
+                Train_Predictions = SetPredictions(train_ID, Tree.Labels);
                 ShuffleForestData(rand);
 
                 data_1 = new List<Entry>();
@@ -80,10 +87,13 @@ namespace Assignment_1
                 Tree.DetermineError(ref trainingDataHelper);
                 Predictions = SetPredictions(eval_ID, Tree.Labels);
 
-                Forest.Add(new BaggedForest(Accuracy, Predictions));
+                Forest.Add(new BaggedForest(Accuracy, Train_Predictions, Test_Predictions, Predictions));
 
-                //if(i % 3 == 0) { Console.WriteLine(i); }
+                //if(i % 5 == 0) { Console.WriteLine(i); }
             }
+            data_1 = new List<Entry>();
+            data_2 = new List<Entry>();
+            SetData(r, r2);
         }
         private void ShuffleForestData(Random rand)
         {
