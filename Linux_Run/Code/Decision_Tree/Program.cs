@@ -74,6 +74,10 @@ namespace Assignment_1
                 List<Entry> Train_Data = tweetData.data_1;
                 List<Entry> Test_Data = tweetData.data_2;
                 List<Entry> Eval_Data = tweetData.data_3;
+                double Majority_Baseline = 100 - ((Convert.ToDouble(Train_Data.Where(x => x.Sign == 1).Count()) / Convert.ToDouble(Train_Data.Count())) * 100);
+                double Majority_Baseline_Test = 100 - ((Convert.ToDouble(Test_Data.Where(x => x.Sign == 1).Count()) / Convert.ToDouble(Test_Data.Count())) * 100);
+                Console.WriteLine("The Majority Baseline for the Training Set is:\n\t" + Majority_Baseline);
+                Console.WriteLine("The Majority Baseline for the Test Set is:\n\t" + Majority_Baseline_Test);
                 data = new Data(ref C1, ref C2, ref C3, ref C4, ref C5, ref Eval_Data, Eval_ID, ref re_tweets, ref post, int.MaxValue, r);
                 data1 = new Data(ref C1, ref C2, ref C3, ref C4, ref C5, ref Eval_Data, Eval_ID, ref re_tweets, ref post, 2, r);
                 data2 = new Data(ref C1, ref C2, ref C3, ref C4, ref C5, ref Eval_Data, Eval_ID, ref re_tweets, ref post, 3, r);
